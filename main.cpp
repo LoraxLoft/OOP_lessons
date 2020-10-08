@@ -1,56 +1,72 @@
 #include <iostream>
-#include <string>
+
 using namespace std;
 
-class LongNumb{
+class Erry {
+    const char *message;
+public:
+
+    explicit Erry(const char *er) {
+        message = er;
+        print();
+    }
+
+    void print() {
+        if (strcmp(message, "one") == 0) {
+            cout << "Number is too big to be this type";
+        } else if (strcmp(message, "two") == 0) {
+            cout << "Summ is too large to live";
+        } else if (strcmp(message, "three") == 0) {
+            cout << "Argument cannot be negative";
+        }
+    }
+
+};
+
+class LongNumb {
 
     long maximum = 1e6;
-    long number;
+    long number{};
 
 public:
 
-    LongNumb add(LongNumb x, LongNumb y){
-        LongNumb result;
-        result.number = x.number + y.number;
-        return result;
+    LongNumb operator+(const LongNumb &chis) const {
+        long result = number + chis.number;
+        if (result > 1e6) {
+            throw Erry("two");
+        } else {
+            return (number + chis.number);
+        }
     }
 
-    void print(){
-        cout<< number;
+    void print() const {
+        cout << number;
     }
 
-    LongNumb(){}
+    LongNumb() {}
 
     LongNumb(long x) {
-        try {
-            if (x > maximum) {
-                throw "one";
-            } else {
-                number = x;
-            }
+        if (x > maximum) {
+            throw Erry("one");
+        } else if (x < 0) {
+            throw Erry("three");
+        } else {
+            number = x;
         }
-        /*
-        catch (const char* err) {
 
-            if (strcmp(err,"one") == 0){
-                cout << "Number is too big to be this type";
-            }
-
-        } */
     }
 
 
 };
 
-int main(){
+int main() {
 
-    catch (const char* err) {
+    LongNumb n1 = LongNumb(-1e6);
+    n1.print();
+    LongNumb n2 = LongNumb(7);
+    n2.print();
+    n1 + n2;
+    n1.print();
 
-        if (strcmp(err,"one") == 0){
-            cout << "Number is too big to be this type";
-        }
-
-    }
-    
     return 0;
 }
